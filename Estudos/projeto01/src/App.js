@@ -27,9 +27,12 @@ class App extends Component {
     const { posts } = this.state;
     console.log(posts);
     return (
-      <section className='container'>
-        <Posts posts={posts} />
-      </section>
+      <div>
+        <h1>Sistema de Posts</h1>
+        <section className='container'>
+          <Posts posts={posts} />
+        </section>
+      </div>
     );
   }
 }
