@@ -1,14 +1,17 @@
 import './styles.css';
 import { Component } from 'react/cjs/react.production.min';
+
 import { Posts } from '../../components/Posts';
 import { Button } from '../../components/Button'
+import { TextInput } from '../../components/TextInput'
 
 export class Home extends Component {
   state = {
     posts: [],
     allPosts: [],
     page: 0,
-    postsPerPage: 10
+    postsPerPage: 10,
+    searchValue: '',
   }
 
   async componentDidMount() {
@@ -32,6 +35,11 @@ export class Home extends Component {
     this.setState({ posts, page: nextPage });
   }
 
+  handleChange = (e) => {
+    const { value } = e.target;
+    this.setState({ searchValue: value });
+  }
+
   //Melhoria separar em uma class
   getPosts = async () => {
     const postResponse = fetch('https://jsonplaceholder.typicode.com/posts');
@@ -44,15 +52,30 @@ export class Home extends Component {
   }
 
   render() {
-    const { posts, page, postsPerPage, allPosts } = this.state;
-    const noMorePosts = page+ postsPerPage >= allPosts.length;
+    const { posts, page, postsPerPage, allPosts, searchValue } = this.state;
+    const noMorePosts = page + postsPerPage >= allPosts.length;
+    const filteredPosts = !!searchValue ? allPosts.filter(post => {
+      return post.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
+    }) : posts;
     return (
       <div>
         <h1 className='titulo-site'>Sistema de Posts</h1>
         <section className='container'>
-          <Posts posts={posts} />
+
+          <div className='search-container'>
+            {!!searchValue && <h1> Search Value: {searchValue}</h1>}
+            <TextInput searchValue={searchValue} handleChange={this.handleChange} />
+          </div>
+
+          {
+            filteredPosts.length === 0 ? <p>Não existe posts!!!</p> : <Posts posts={filteredPosts} />
+          }
+
+
           <div className='button-container'>
-            <Button text="Load more posts" loadMorePosts={this.loadMorePosts} disabled={noMorePosts} />
+            {!searchValue &&
+              <Button text="Load more posts" loadMorePosts={this.loadMorePosts} disabled={noMorePosts} />
+            }
           </div>
         </section>
       </div>
