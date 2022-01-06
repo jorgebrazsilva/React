@@ -1,13 +1,15 @@
 import './App.css';
 import { Component } from 'react/cjs/react.production.min';
+import { Posts } from './components/Posts/Index';
 
 class App extends Component {
   state = {
     posts: []
   }
 
-  componentDidMount() {
-    this.loadPosts();
+  async componentDidMount() {
+    const postAndPhotos = await this.loadPosts();
+    this.setState({ posts: postAndPhotos });
   }
   //Melhoria seprar em uma class
   loadPosts = async () => {
@@ -17,8 +19,8 @@ class App extends Component {
     const postJson = await posts.json();
     const photoJson = await photos.json();
     const postAndPhotos = postJson.map((post, index) => { return { ...post, cover: photoJson[index].url } });
+    return postAndPhotos;
 
-    this.setState({ posts: postAndPhotos });
   }
 
   render() {
@@ -26,17 +28,7 @@ class App extends Component {
     console.log(posts);
     return (
       <section className='container'>
-        <div className="posts">
-          {posts.map(post => (
-            <div className='post'>
-              <img src={post.cover} alt={post.title}></img>
-              <div className='post-content'>
-                <h1>{post.title}</h1>
-                <p>{post.body}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Posts posts={posts} />
       </section>
     );
   }
