@@ -1,3 +1,9 @@
+.titulo-site{
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
 .container{
   max-width: 1200px;
   margin: 0 auto;

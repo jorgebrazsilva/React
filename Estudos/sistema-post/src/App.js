@@ -28,7 +28,7 @@ class App extends Component {
     console.log(posts);
     return (
       <div>
-        <h1>Sistema de Posts</h1>
+        <h1 className='titulo-site'>Sistema de Posts</h1>
         <section className='container'>
           <Posts posts={posts} />
         </section>
