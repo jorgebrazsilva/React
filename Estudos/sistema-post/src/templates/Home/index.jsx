@@ -1,8 +1,8 @@
-import './App.css';
+import './styles.css';
 import { Component } from 'react/cjs/react.production.min';
-import { Posts } from './components/Posts/Index';
+import { Posts } from '../../components/Posts';
 
-class App extends Component {
+export class Home extends Component {
   state = {
     posts: []
   }
@@ -36,5 +36,4 @@ class App extends Component {
     );
   }
 }
-export default App;
 

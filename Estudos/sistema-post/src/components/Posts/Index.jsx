@@ -1,4 +1,4 @@
-import { PostCard } from "../PostCard/Index";
+import { PostCard } from "../PostCard/index";
 
 export const Posts = ({ posts }) => {
     return (
